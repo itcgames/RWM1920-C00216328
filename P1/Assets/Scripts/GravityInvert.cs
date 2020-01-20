@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GravityInvert : MonoBehaviour {
-    public Rigidbody Rb;
-    public static double invertVal=1;
-    int rounded;
-    void OnTriggerStay(Collider other)
+    private Rigidbody2D Rb;
+
+
+    Vector2 vec;
+    
+    void OnTriggerStay2D(Collider2D other)
     {
-        rounded = Mathf.RoundToInt((float)invertVal);
-        Rb = other.gameObject.GetComponent<Rigidbody>();
-        Rb.AddForce(-rounded*(Physics.gravity) * Rb.mass);
-        Debug.Log(invertVal);
+        Vector2 temp = new Vector2(Mathf.Cos(((transform.rotation.eulerAngles.z + 90) * Mathf.PI) / 180), Mathf.Sin(((transform.rotation.eulerAngles.z + 90) * Mathf.PI) / 180));
+        Rb = other.gameObject.GetComponent<Rigidbody2D>();
+        vec = (temp * Rb.mass)*50;
+        Rb.AddForce(vec);
     }
 }
