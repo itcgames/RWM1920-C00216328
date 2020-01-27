@@ -6,33 +6,34 @@ public class InvertToggle : MonoBehaviour {
 
     Vector2 centrePoint;
     public GameObject Go;
-    GravityInvert grav;
+    RotateObj grav;
     
 
     void Start()
     {
         centrePoint = GetComponent<Renderer>().bounds.center;
        
-        grav = Go.GetComponent<GravityInvert>();
+        grav = Go.GetComponent<RotateObj>();
         
 
 
 
     }
     
-    void OnTriggerStay(Collider other)
+    void OnTriggerStay2D(Collider2D other)
     {
         if(other.gameObject.tag==("Finish"))
         {
-            //Debug.Log("col detected");
-            if (other.gameObject.transform.position.x <centrePoint.x)
-            {
-                GravityInvert.invertVal = (other.gameObject.transform.position.x - centrePoint.x) ;
-            }
-            else if (other.gameObject.transform.position.x > centrePoint.x)
-            {
-                GravityInvert.invertVal = ((other.gameObject.transform.position.x - centrePoint.x)) ;
-            }
+            Debug.Log("col detected");
+			if (other.gameObject.transform.position.x < centrePoint.x) {
+				grav.speed = (other.gameObject.transform.position.x - centrePoint.x)*10;
+			} else if (other.gameObject.transform.position.x > centrePoint.x) {
+				grav.speed = ((other.gameObject.transform.position.x - centrePoint.x))*10;
+			} else 
+			{
+				grav.speed = 0;
+			}
+            grav.rotate();
         }
     }
 }
